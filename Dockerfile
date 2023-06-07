@@ -32,6 +32,4 @@ ENV PYTHONUNBUFFERED=1
 ENV TZ=Europe/London
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-VOLUME /home/pi/train-sign/src/config.py /src/config.py
-
 CMD ["python3", "src/main.py"]
