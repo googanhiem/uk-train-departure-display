@@ -161,18 +161,43 @@ def loadData(apiConfig, journeyConfig, config):
     else:
         rows = "3"
 
-    try: 
+    try:
         departures, stationName = loadDeparturesForStation(
             journeyConfig, apiConfig["apiKey"], rows)
 
-        if (departures == None):
+        if departures is None:
             return False, False, stationName
 
         firstDepartureDestinations = departures[0]["calling_at_list"]
         return departures, firstDepartureDestinations, stationName
+
     except requests.RequestException as err:
-        print("Error: Failed to fetch data from OpenLDBWS")
-        print(err.__context__)
+        max_retries = 2
+        retry_delay = 60
+        retries = 0
+
+        while retries < max_retries:
+
+            retries += 1
+            if retries < max_retries:
+                print(f"train-sign - Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+
+                try:
+                    departures, stationName = loadDeparturesForStation(
+                        journeyConfig, apiConfig["apiKey"], rows)
+
+                    if departures is None:
+                        return False, False, stationName
+
+                    firstDepartureDestinations = departures[0]["calling_at_list"]
+                    return departures, firstDepartureDestinations, stationName
+
+                except requests.RequestException as err:
+                    print("train-sign - Error: Failed to fetch data from OpenLDBWS after retry")
+                    print(err.__context__)
+                    continue
+
         return False, False, journeyConfig['outOfHoursName']
 
 
@@ -324,13 +349,13 @@ def drawSignage(device, width, height, data):
 try:
     version_file = open('VERSION', 'r')
 
-    print('Starting Train Departure Display v' + version_file.read())
+    print('train-sign - Starting Train Departure Display v' + version_file.read())
     config = loadConfig()
 
     serial = spi(port=0)
     device = ssd1322(serial, mode="1", rotate=config['screenRotation'])
     if config['dualScreen'] == True:
-        print('Dual screen enabled')
+        print('train-sign - Dual screen enabled')
         serial1 = spi(port=1,gpio_DC=5, gpio_RST=6)
         device1 = ssd1322(serial1, mode="1", rotate=config['screenRotation'])
     font = makeFont("Dot Matrix Regular.ttf", 10)
@@ -372,7 +397,7 @@ try:
             else:
                 if(timeNow - timeAtStart >= config["refreshTime"]):
 
-                    print('Effective FPS: ' + str(round(regulator.effective_FPS(),2)))
+#                    print('train-sign - New Effective FPS: ' + str(round(regulator.effective_FPS(),2)))
                     data = loadData(config["api"], config["journey"], config)
                     if data[0] == False:
                         virtual = drawBlankSignage(
@@ -401,6 +426,6 @@ try:
 except KeyboardInterrupt:
     pass
 except ValueError as err:
-    print(f"Error: {err}")
+    print(f"train-sign - Error: {err}")
 # except KeyError as err:
 #     print(f"Error: Please ensure the {err} environment variable is set")
