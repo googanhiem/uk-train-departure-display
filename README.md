@@ -4,6 +4,13 @@
 
 This version worked better on docker (sans balena), only support one display. Edit the src/config.py with your api code and station info.
 
+First run
+'docker pull ghcr.io/googanhiem/uk-train-departure-display-docker:latest'
+
+Then run (putting your updated config.py file in your home dir /train-sign/)
+'docker run -v ~/train-sign/config.py:/src/config.py ghcr.io/googanhiem/uk-train-departure-display-docker:latest --restart=always redis'
+
+
 ## Highlights
 
 - **See local departures**: Display the depatures from your local station at home for up to date train information.
