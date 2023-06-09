@@ -4,6 +4,8 @@
 
 This version worked better on docker (sans balena), only support one display. Edit the src/config.py with your api code and station info.
 
+***commands below do not work yet***
+
 First run
 
 `docker pull ghcr.io/googanhiem/uk-train-departure-display-docker:latest`
