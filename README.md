@@ -2,7 +2,7 @@
 
 **A replica, near real-time, miniature UK railway station train departure sign based upon a Raspberry Pi Zero and 256x64 SPI OLED display(s). Uses the publicly available [OpenLDBWS API by National Rail Enquiries](https://www.nationalrail.co.uk/).**
 
-This version worked better on docker (sans balena), only support one display. Edit the src/config.py with your api code and station info.
+This version is designed to work better on docker (without balena), though it only has support for one display. It requires more hands on editing to work, so you should be familiar with Docker and a little bit of python to make this work.
 
 ***commands below do not work yet***
 
@@ -19,7 +19,6 @@ The config should look like, this [config.py](/config.py) file - More details on
 ## Highlights
 - **See local departures**: Display the depatures from your local station at home for up to date train information.
 - **3D-printable cases**: Print your own miniature case to keep everything tidy - both desktop and 'hanging' style available.
-- **Dual display support**: Run two displays each showing departures from different platforms from a single Raspberry Pi.
 
 ![](assets/blog-header.jpg)
 ![](docs/images/completed-unit.jpg)
