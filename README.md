@@ -14,38 +14,9 @@ Then run (putting your updated config.py file in your home dir /train-sign/)
 
 `docker run -v ~/train-sign/config.py:/src/config.py ghcr.io/googanhiem/uk-train-departure-display-docker:latest --restart=always redis`
 
-config.py should look like,
-`import os
-import re
-
-def loadConfig():
-    data = {
-        "journey": {},
-        "api": {}
-    }
-
-    data["refreshTime"] = 60
-    data["screenRotation"] = 2
-    data["screenBlankHours"] = "1-5"
-    data["dualScreen"] = False
-    data["hoursPattern"] = re.compile("^((2[0-3]|[0-1]?[0-9])-(2[0-3]|[0-1]?[0-9]))$")
-    data["journey"]["departureStation"] = "PAD"
-    data["journey"]["destinationStation"] = ""
-    data["journey"]["individualStationDepartureTime"] = False
-    data["journey"]["outOfHoursName"] = "London Paddington"
-    data["journey"]["stationAbbr"] = { "International": "Intl." }
-    data["journey"]['timeOffset'] = "0"
-    data["journey"]["screen1Platform"] = ""
-    data["journey"]["screen2Platform"] = ""
-    data["api"]["apiKey"] = "[INSERT-API-KEY-HERE]"
-    data["api"]["operatingHours"] = "6-1"
-
-    return data'
-    
-   More details on getting a station code and API key below in the [Configuration]
+The config should look like, this [config.py](/blob/master/config.py) file - More details on getting a station code and API key below in the [configuration](/docs/04-configuration.md)
 
 ## Highlights
-
 - **See local departures**: Display the depatures from your local station at home for up to date train information.
 - **3D-printable cases**: Print your own miniature case to keep everything tidy - both desktop and 'hanging' style available.
 - **Dual display support**: Run two displays each showing departures from different platforms from a single Raspberry Pi.
