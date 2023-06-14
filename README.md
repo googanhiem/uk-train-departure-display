@@ -14,7 +14,7 @@ Then run (putting your updated config.py file in your home dir /train-sign/)
 
 `docker run -v ~/train-sign/config.py:/src/config.py ghcr.io/googanhiem/uk-train-departure-display-docker:latest --restart=always redis`
 
-The config should look like, this [config.py](/blob/master/config.py) file - More details on getting a station code and API key below in the [configuration](/docs/04-configuration.md)
+The config should look like, this [config.py](/config.py) file - More details on getting a station code and API key below in the [configuration](/docs/04-configuration.md)
 
 ## Highlights
 - **See local departures**: Display the depatures from your local station at home for up to date train information.
